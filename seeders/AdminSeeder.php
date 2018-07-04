@@ -15,8 +15,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        if (!UserHelper::userExists("${ADMIN_USERNAME}"))
-		{
+        if (!UserHelper::userExists("${ADMIN_USERNAME}")){
             UserFactory::createUser("${ADMIN_USERNAME}", "${ADMIN_EMAIL}", "${ADMIN_PASSWORD}", 1, "", null, false, "admin");
         }
     }
