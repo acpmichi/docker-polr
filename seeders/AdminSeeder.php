@@ -19,6 +19,5 @@ class AdminSeeder extends Seeder
 		{
             UserFactory::createUser("${ADMIN_USERNAME}", "${ADMIN_EMAIL}", "${ADMIN_PASSWORD}", 1, "", null, false, "admin");
         }
-		
     }
 }
