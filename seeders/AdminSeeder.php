@@ -20,3 +20,4 @@ class AdminSeeder extends Seeder
         }
     }
 }
+?>
