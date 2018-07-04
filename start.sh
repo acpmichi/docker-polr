@@ -18,9 +18,8 @@ fi
 
 if [ ! -f "database/seeds/AdminSeeder.php" ]; then
     envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
-    
-    php artisan db:seed --class=AdminSeeder --force
-    rm -f AdminSeeder_withoutEnv.php
+	rm -f AdminSeeder_withoutEnv.php
 fi
+php artisan db:seed --class=AdminSeeder --force
 
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
