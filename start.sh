@@ -21,7 +21,7 @@ fi
 cd database/
 cd seeds/
 
-if [ ! -f AdminSeeder.php ]; then
+if [ ! -f "AdminSeeder.php" ]; then
     echo "im AdminSeeder IF"
 	envsubst < "AdminSeeder_withoutEnv.php" > "AdminSeeder.php"
 	rm -f AdminSeeder_withoutEnv.php
