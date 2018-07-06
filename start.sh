@@ -2,6 +2,7 @@
 
 function doSeStartThing
 {
+echo "Am Anfang vom Try"
 if [ ! -f ".env" ]; then
     POLR_GENERATED_AT=`date +"%B %d, %Y"`
     export POLR_GENERATED_AT
@@ -23,6 +24,7 @@ if [ ! -f "database/seeds/AdminSeeder.php" ]; then
 	php artisan db:seed --class=AdminSeeder --force
 fi
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+echo "Am Ende vom Try"
 }
 
 function fallsError
@@ -31,19 +33,12 @@ function fallsError
   composer dump-autoload
   php artisan geoip:update
   php artisan db:seed --class=AdminSeeder --force
+  echo "Am Ende vom Catch"
 }
-
 
 function execTheThing
 {
-  try
-  {
-    doSeStartThing
-  }
-  catch
-  {
-    fallsError
-  }
+  doSeStartThing || fallsError
 }
 
 sleep 10
