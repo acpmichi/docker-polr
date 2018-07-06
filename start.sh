@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd /src
+function doSeStartThing
+{
 if [ ! -f ".env" ]; then
     POLR_GENERATED_AT=`date +"%B %d, %Y"`
     export POLR_GENERATED_AT
@@ -21,10 +22,30 @@ if [ ! -f "database/seeds/AdminSeeder.php" ]; then
 	rm -f AdminSeeder_withoutEnv.php
 	php artisan db:seed --class=AdminSeeder --force
 fi
-
-php artisan migrate --force
-composer dump-autoload
-php artisan geoip:update
-php artisan db:seed --class=AdminSeeder --force
-
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+}
+
+function fallsError
+{
+  php artisan migrate --force
+  composer dump-autoload
+  php artisan geoip:update
+  php artisan db:seed --class=AdminSeeder --force
+}
+
+
+function execTheThing
+{
+  try
+  {
+    doSeStartThing
+  }
+  catch
+  {
+    fallsError
+  }
+}
+
+sleep 10
+cd /src
+execTheThing
