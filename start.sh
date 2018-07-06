@@ -18,12 +18,9 @@ if [ ! -f ".env" ]; then
     php artisan geoip:update
 fi
 
-cd database/
-cd seeds/
-
-if [ ! -f "AdminSeeder.php" ]; then
-    echo "im AdminSeeder IF"
-	envsubst < "AdminSeeder_withoutEnv.php" > "AdminSeeder.php"
+if [ ! -f "database/seeds/AdminSeeder.php" ]; then
+    echo "im AmdinSeeder-IF"
+	envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
 	rm -f AdminSeeder_withoutEnv.php
 	php artisan db:seed --class=AdminSeeder --force
 fi
@@ -34,7 +31,6 @@ echo "Am Ende vom Try"
 function fallsError
 {
   echo "Am Anfang vom Catch"
-  cd /src
   php artisan migrate --force
   composer dump-autoload
   php artisan geoip:update
