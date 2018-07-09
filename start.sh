@@ -19,16 +19,15 @@ if [ ! -f ".env" ] ; then
 fi
 
 sleep 10
-php artisan geoip:update
-
-if [ ! -f "database/seeds/AdminSeeder.php" ] ; then
-    echo "im AmdinSeeder-IF"
-	envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
-	rm -f AdminSeeder_withoutEnv.php
-	php artisan db:seed --class=AdminSeeder --force
-fi
+	
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+
+envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
+php artisan db:seed --class=AdminSeeder --force
+
+
 echo "Am Ende vom Try"
+fallsError
 }
 
 function fallsError
