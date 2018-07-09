@@ -25,6 +25,7 @@ fallsError
 
 function fallsError
 {
+  cd /src
   echo "Am Anfang vom Catch"
   php artisan migrate --force
   composer dump-autoload
