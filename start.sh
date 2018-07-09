@@ -3,7 +3,7 @@
 function doSeStartThing
 {
 echo "Am Anfang vom Try"
-if [ ! -f ".env" ]; then
+if [ ! -f ".env" ] ; then
     POLR_GENERATED_AT=`date +"%B %d, %Y"`
     export POLR_GENERATED_AT
 
@@ -18,7 +18,7 @@ if [ ! -f ".env" ]; then
     php artisan geoip:update
 fi
 
-if [ ! -f "database/seeds/AdminSeeder.php" ]; then
+if [ ! -f "database/seeds/AdminSeeder.php" ] ; then
     echo "im AmdinSeeder-IF"
 	envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
 	rm -f AdminSeeder_withoutEnv.php
