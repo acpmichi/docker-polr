@@ -18,7 +18,10 @@ if [ ! -f ".env" ] ; then
     php artisan geoip:update
 fi
 
-if [ ! -f database/seeds/AdminSeeder.php ] ; then
+sleep 10
+php artisan geoip:update
+
+if [ ! -f "database/seeds/AdminSeeder.php" ] ; then
     echo "im AmdinSeeder-IF"
 	envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
 	rm -f AdminSeeder_withoutEnv.php
