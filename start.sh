@@ -18,8 +18,6 @@ if [ ! -f ".env" ] ; then
     php artisan geoip:update
 fi
 
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
 echo "Am Ende vom Try"
 sleep 30
 fallsError
@@ -33,6 +31,7 @@ function fallsError
   php artisan geoip:update
   envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
   php artisan db:seed --class=AdminSeeder --force
+  /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
   echo "Am Ende vom Catch"
 }
 
