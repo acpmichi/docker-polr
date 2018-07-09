@@ -18,15 +18,10 @@ if [ ! -f ".env" ] ; then
     php artisan geoip:update
 fi
 
-sleep 10
-	
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 
-envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
-php artisan db:seed --class=AdminSeeder --force
-
-
 echo "Am Ende vom Try"
+sleep 30
 fallsError
 }
 
@@ -36,6 +31,7 @@ function fallsError
   php artisan migrate --force
   composer dump-autoload
   php artisan geoip:update
+  envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
   php artisan db:seed --class=AdminSeeder --force
   echo "Am Ende vom Catch"
 }
