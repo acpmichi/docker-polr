@@ -1,7 +1,9 @@
 #!/bin/sh
 
-cd /src
-if [ ! -f ".env" ]; then
+function doSeStartThing
+{
+echo "Am Anfang vom Try"
+if [ ! -f ".env" ] ; then
     POLR_GENERATED_AT=`date +"%B %d, %Y"`
     export POLR_GENERATED_AT
 
@@ -16,11 +18,29 @@ if [ ! -f ".env" ]; then
     php artisan geoip:update
 fi
 
-if [ ! -f "database/seeds/AdminSeeder.php" ]; then
-    envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
-    
-    php artisan db:seed --class=AdminSeeder --force
-    rm -f AdminSeeder_withoutEnv.php
-fi
+echo "Am Ende vom Try"
+sleep 30
+fallsError
+}
 
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+function fallsError
+{
+  cd /src
+  echo "Am Anfang vom Catch"
+  php artisan migrate --force
+  composer dump-autoload
+  php artisan geoip:update
+  envsubst < "AdminSeeder_withoutEnv.php" > "database/seeds/AdminSeeder.php"
+  php artisan db:seed --class=AdminSeeder --force
+  /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+  echo "Am Ende vom Catch"
+}
+
+function execTheThing
+{
+  doSeStartThing || fallsError
+}
+
+sleep 10
+cd /src
+execTheThing
