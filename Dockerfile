@@ -53,7 +53,7 @@ RUN mkdir -p storage/logs && \
 COPY config/.env_polr .env_polr
 
 # Copy admin seeder
-COPY seeders/AdminSeeder.php AdminSeeder_withoutEnv.php
+COPY database/seeds/AdminSeeder.php AdminSeeder_withoutEnv.php
 
 # Removing now useless dependency
 RUN apk del git
