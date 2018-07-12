@@ -1,6 +1,6 @@
 # Forked from TrafeX/docker-php-nginx (https://github.com/TrafeX/docker-php-nginx/)
 
-FROM alpine:3.6
+FROM alpine:3.7
 LABEL Maintainer="Aurélien JANVIER <dev@ajanvier.fr>" \
       Description="Unofficial Docker image for Polr."
 
